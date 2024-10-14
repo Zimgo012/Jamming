@@ -10,7 +10,7 @@ function SearchResults(props) {
             <Box sx={{
                 bgcolor: 'rgba(0,0,0,0.49)',
                 height: '500px',
-                width: '750px',
+                width: '550px',
                 padding: '30px',
                 borderRadius: 3,
                 overflow:'auto',

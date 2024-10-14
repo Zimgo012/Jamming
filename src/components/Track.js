@@ -9,9 +9,9 @@ function Track(props) {
 
     if (props.type === 'fromSearch'){
         return (
-            <ListItem alignItems="center" divider>
+            <ListItem alignItems="flex-start" divider>
                 <ListItemAvatar>
-                    <Avatar variant="square" src ={props.imageURL} sx={{ width: 56, height: 56, margin:2 }} />
+                    <Avatar variant="square" src ={props.imageURL} sx={{ width: 80, height: 80, margin:2 }} />
                 </ListItemAvatar>
                 <ListItemText sx={{color: 'white'}}>
                         <ListItemText
@@ -37,7 +37,7 @@ function Track(props) {
         )
     } else if(props.type === 'fromPlaylist'){
         return (
-            <ListItem alignItems="center" divider>
+            <ListItem alignItems="flex-start" divider>
                 <ListItemAvatar>
                     <Avatar variant="square" src ={props.imageURL} sx={{ width: 56, height: 56, margin:2 }} />
                 </ListItemAvatar>

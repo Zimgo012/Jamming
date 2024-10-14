@@ -32,7 +32,7 @@ function Playlist(props) {
             <Box sx={{
                 bgcolor: 'rgba(0,0,0,0.49)',
                 height: '500px',
-                width: '550px',
+                width: '400px',
                 padding: '30px',
                 borderRadius: 3,
                 overflow:'auto',
@@ -93,7 +93,7 @@ function Playlist(props) {
                         onClick={handleAddToSpotify}
                         variant="contained"
                         color={'secondary'}
-                        sx={{position: 'absolute', bottom: '120px'}}
+                        sx={{position: 'absolute', bottom: '20px'}}
                     >
                         Save to Spotify
                     </Button>
