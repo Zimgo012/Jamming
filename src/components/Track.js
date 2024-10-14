@@ -37,9 +37,27 @@ function Track(props) {
         )
     } else if(props.type === 'fromPlaylist'){
         return (
-            <ListItem>
-                <ListItemText sx={{color: 'white'}} primary={`Song: ${props.name}`} />
-                <ListItemText sx={{color: 'white'}} primary={`Artist: ${props.artist} | Album: ${props.album}`} />
+            <ListItem alignItems="center" divider>
+                <ListItemAvatar>
+                    <Avatar variant="square" src ={props.imageURL} sx={{ width: 56, height: 56, margin:2 }} />
+                </ListItemAvatar>
+                <ListItemText sx={{color: 'white'}}>
+                    <ListItemText
+                        sx={{color: 'white'}}
+                        primary={`${props.name}`}
+                        primaryTypographyProps={{variant: 'songTitle'}}
+                    />
+                    <ListItemText
+                        sx={{color: 'white'}}
+                        primary={`${props.artist}`}
+                        primaryTypographyProps={{variant: 'songArtist'}}
+                    />
+                    <ListItemText
+                        sx={{color: 'white'}}
+                        primary={`Album: ${props.album}`}
+                        primaryTypographyProps={{variant: 'songAlbum'}}
+                    />
+                </ListItemText>
 
                 <DeleteIcon sx={{color: 'white', '&:hover':{color: 'yellow',cursor: 'pointer'}}} onClick={props.onRemove} />
             </ListItem>

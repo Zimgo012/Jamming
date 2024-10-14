@@ -39,7 +39,7 @@ function TrackList(props) {
 
 
     return(
-        <Grid2 container direction={'column'} style={{alignItems:'center', padding: '0px'}}>
+        <Grid2 container direction={'column'} style={{alignItems:'center', padding: 0,}}>
             <Grid2 container style={{
                         justifyContent:"center",
                         alignItems:"center",

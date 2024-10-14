@@ -36,13 +36,14 @@ function Playlist(props) {
                 padding: '30px',
                 borderRadius: 3,
                 overflow:'auto',
+
                 '&::-webkit-scrollbar': {
                     width: '10px'
                 },
 
-                /* Track */
+
                 '&::-webkit-scrollbar-track': {
-                    display: 'none'
+                    marginBlock: '1em',
                 },
 
                 '::-webkit-scrollbar-thumb': {
@@ -66,7 +67,7 @@ function Playlist(props) {
                            id="Playlist Name"
                            value={playlistName}
                            onChange={handlePlaylistOnChange}
-                           sx= {{ input: { color: 'white' },
+                           sx= {{ input: { color: 'white', fontSize: 20, fontWeight: 'bold' },
                                label: {color: 'white'}}}
                 />
                 <List>
@@ -77,6 +78,7 @@ function Playlist(props) {
                             artist={item.artist}
                             album={item.album}
                             uri={item.uri}
+                            imageURL={item.imageURL}
                             onRemove={() => props.onRemove(item.id)}
                         />
                     ))}
@@ -85,11 +87,16 @@ function Playlist(props) {
                         sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            width: '200px'}}>
+                            width: '200px',
+                        }}>
                     <Button
                         onClick={handleAddToSpotify}
                         variant="contained"
-                        color={'secondary'}>Save to Spotify</Button>
+                        color={'secondary'}
+                        sx={{position: 'absolute', bottom: '120px'}}
+                    >
+                        Save to Spotify
+                    </Button>
                 </Container>
             </Box>
 

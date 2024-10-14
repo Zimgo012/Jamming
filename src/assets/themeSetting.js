@@ -3,10 +3,12 @@ const themeSetting = {
     palette: {
         primary: {
             main: 'rgb(126,65,116)',
+
         },
         secondary: {
-            main: 'rgb(254,228,56)',
-            faded: 'rgba(254,228,56,0.61)'
+            main: 'rgb(213,189,18)',
+            faded: 'rgba(255,221,0,0.39)',
+            dark: 'rgb(255,220,0)'
         },
         normalText:{
             main: 'rgb(255,255,255)'

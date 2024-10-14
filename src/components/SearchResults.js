@@ -10,17 +10,19 @@ function SearchResults(props) {
             <Box sx={{
                 bgcolor: 'rgba(0,0,0,0.49)',
                 height: '500px',
-                width: '1000px',
+                width: '750px',
                 padding: '30px',
                 borderRadius: 3,
                 overflow:'auto',
+
                 '&::-webkit-scrollbar': {
-                width: '10px'
+                width: '10px',
+
             },
 
-                /* Track */
+
                 '&::-webkit-scrollbar-track': {
-                display: 'none'
+                marginBlock: '1em',
             },
 
                 '::-webkit-scrollbar-thumb': {
@@ -34,6 +36,7 @@ function SearchResults(props) {
                     background: 'rgb(164,63,149)',
                     cursor: 'pointer'
                 },
+
 
             }}
             >
