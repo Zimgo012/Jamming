@@ -58,32 +58,41 @@ async function getAccessToken(clientId, code) {
         });
 
         const { access_token } = await result.json();
+        localStorage.setItem("access_token", access_token);
         return access_token;
     }
 
 
 
 //Login Checker :: returns true if there is access token
-export const login = () => {
-   return !!accessToken;
+export const loginStatus = () => {
+    return !!accessToken;
 }
 
 //Login or Token Getting
 export async function loginSpotify() {
     if (!code) {
         setTimeout(async () => {
-            await redirectToAuthCodeFlow(clientId
-        );
-        },1000)
-
+            await redirectToAuthCodeFlow(clientId);
+        },0)
 
     } else {
-        if(login()){
+        if(loginStatus()){
+            console.log('logged in')
         }else{
+            console.log("!loginstatus")
             accessToken = await getAccessToken(clientId, code);
         }
 
     }
 
 }
+
+export function logoutSpotify(){
+    localStorage.removeItem("access_token");
+    console.log("logged out")
+    accessToken = null;
+}
+
+
 

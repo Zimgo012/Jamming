@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {loginSpotify, accessToken,login} from "./spotifyLogin";
+import {loginSpotify, accessToken,loginStatus} from "./spotifyLogin";
 
 //fetching data from searched song
 async function fetchSearchSong(searchKey,token){

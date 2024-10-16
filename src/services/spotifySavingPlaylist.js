@@ -1,4 +1,4 @@
-import {loginSpotify, accessToken,login} from "./spotifyLogin";
+import {loginSpotify, accessToken,loginStatus} from "./spotifyLogin";
 import{fetchProfile} from "./spotifyFetchProfile";
 
 //Creating Playlist
@@ -31,7 +31,7 @@ async function addSongsToPlaylist(songsURI,playlist_id,token){
 
 //Executor :: Return an array of Objects
 export async function saveToSpotify(playlistName,data){
-    if(!login()){
+    if(!loginStatus()){
         await loginSpotify();
         const userID = await fetchProfile(accessToken).then(res => res.id);
         const playlistID = await createPlaylist(userID,playlistName,accessToken).then(res => res.id);
