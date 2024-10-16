@@ -3,15 +3,16 @@ import Playlist from './Playlist';
 import SearchResult from './SearchResults';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import {searchSong} from "../services/spotifyCall";
 import {Grid2} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
+import {searchSong} from "../services/spotifyFetchSong";
+import {loginSpotify} from "../services/spotifyLogin";
+
 
 
 function TrackList(props) {
     const [playlist, setPlaylist] = React.useState([]);
     const [searchValue, setSearchValue] = React.useState("");
-
     const[data,setData] = React.useState([]);
 
     function handleTextFieldOnChange(e) {
@@ -23,7 +24,9 @@ function TrackList(props) {
         setSearchValue("");
     }
 
-
+    function handleLogin(){
+        loginSpotify();
+    }
 
     function handleClearPlaylist(){
         setPlaylist([]);
@@ -68,6 +71,12 @@ function TrackList(props) {
                 >
                     Search Song
                 </Button>
+                <Button onClick={handleLogin}
+                        color={'secondary'}
+                        variant="contained"
+                        endIcon={<SearchIcon/>}
+                        style={{borderRadius: "20px"}}
+                />
 
             </Grid2>
             <Grid2>
