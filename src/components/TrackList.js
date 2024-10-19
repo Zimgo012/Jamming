@@ -6,14 +6,23 @@ import Button from "@mui/material/Button";
 import {Grid2} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import {searchSong} from "../services/spotifyFetchSong";
-import {loginSpotify} from "../services/spotifyLogin";
-
+import {loginSpotify, loginStatus} from "../services/spotifyLogin";
 
 
 function TrackList(props) {
     const [playlist, setPlaylist] = React.useState([]);
     const [searchValue, setSearchValue] = React.useState("");
     const[data,setData] = React.useState([]);
+    const hasLoggedIn = React.useRef(false);
+
+    React.useEffect(() => {
+        if (!hasLoggedIn.current) {
+            if (!loginStatus()) {
+                loginSpotify();
+            }
+            hasLoggedIn.current = true;
+        }
+    }, []);
 
     function handleTextFieldOnChange(e) {
         setSearchValue(e.target.value);
@@ -22,10 +31,6 @@ function TrackList(props) {
     function handleSearchButtonClick() {
         searchSong(searchValue).then(result => {setData(result)});
         setSearchValue("");
-    }
-
-    function handleLogin(){
-        loginSpotify();
     }
 
     function handleClearPlaylist(){
@@ -71,12 +76,7 @@ function TrackList(props) {
                 >
                     Search Song
                 </Button>
-                <Button onClick={handleLogin}
-                        color={'secondary'}
-                        variant="contained"
-                        endIcon={<SearchIcon/>}
-                        style={{borderRadius: "20px"}}
-                />
+
 
             </Grid2>
             <Grid2>

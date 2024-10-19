@@ -1,5 +1,3 @@
-import {handleLogin} from "./spotifyCall2";
-
 const clientId = "db5e3e91e9fd4654ac108625797b4560";
 const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
@@ -16,7 +14,7 @@ export async function redirectToAuthCodeFlow(clientId) {
         const params = new URLSearchParams();
         params.append("client_id", clientId);
         params.append("response_type", "code");
-        params.append("redirect_uri", "http://localhost:3000/callback");
+        params.append("redirect_uri", "http://localhost:3000/home");
         params.append("scope", "user-read-private user-read-email playlist-modify-public");
         params.append("code_challenge_method", "S256");
         params.append("code_challenge", challenge);
@@ -47,7 +45,7 @@ async function getAccessToken(clientId, code) {
         params.append("client_id", clientId);
         params.append("grant_type", "authorization_code");
         params.append("code", code);
-        params.append("redirect_uri", "http://localhost:3000/callback");
+        params.append("redirect_uri", "http://localhost:3000/home");
         params.append("code_verifier", verifier);
         params.append("scope", "playlist-modify-public");
 
@@ -58,7 +56,6 @@ async function getAccessToken(clientId, code) {
         });
 
         const { access_token } = await result.json();
-        localStorage.setItem("access_token", access_token);
         return access_token;
     }
 
@@ -66,8 +63,24 @@ async function getAccessToken(clientId, code) {
 
 //Login Checker :: returns true if there is access token
 export const loginStatus = () => {
-    return !!accessToken;
+   const token = accessToken;
+   const expiresAt = localStorage.getItem("expires_at");
+
+    if (!token || !expiresAt) {
+        return false;
+    }
+
+    const now = new Date().getTime();
+    if (now > expiresAt) {
+        console.log("Token has expired");
+        logoutSpotify();
+        return false;
+    }
+
+    return true;
 }
+
+
 
 //Login or Token Getting
 export async function loginSpotify() {
@@ -80,17 +93,28 @@ export async function loginSpotify() {
         if(loginStatus()){
             console.log('logged in')
         }else{
-            console.log("!loginstatus")
+
             accessToken = await getAccessToken(clientId, code);
+            const expiresAt = new Date().getTime() + (3600 * 1000);
+
+            localStorage.setItem("access_token", accessToken);
+            localStorage.setItem("expires_at", expiresAt);
+            localStorage.setItem("hasLoggedIn", 'true');
+
+            window.history.replaceState({}, document.title, "/home");
+
         }
 
     }
 
 }
 
+
 export function logoutSpotify(){
-    localStorage.removeItem("access_token");
-    console.log("logged out")
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('expires_at');
+    localStorage.removeItem('hasLoggedIn');
+    console.log("logged out");
     accessToken = null;
 }
 

@@ -5,7 +5,6 @@ import Track from "./Track";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import {Container} from "@mui/material";
-// import {saveToSpotify} from "../services/spotifyCall";
 import {saveToSpotify} from "../services/spotifySavingPlaylist";
 
 function Playlist(props) {
@@ -93,7 +92,7 @@ function Playlist(props) {
                         onClick={handleAddToSpotify}
                         variant="contained"
                         color={'secondary'}
-                        sx={{position: 'absolute', bottom: '20px'}}
+                        sx={{position: 'absolute', bottom: '150px'}}
                     >
                         Save to Spotify
                     </Button>
