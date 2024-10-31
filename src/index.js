@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {createTheme, ThemeProvider} from '@mui/material'
 import themeSetting from './assets/themeSetting';
+import './index.css';  // Import your global CSS file
 
 const theme = createTheme(themeSetting);
 const root = ReactDOM.createRoot(document.getElementById('root'));

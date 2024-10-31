@@ -4,12 +4,15 @@ import TextField from "@mui/material/TextField";
 import Track from "./Track";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
-import {Container} from "@mui/material";
+import {Alert, AlertTitle, Container} from "@mui/material";
 import {saveToSpotify} from "../services/spotifySavingPlaylist";
 
 function Playlist(props) {
 
     const [playlistName, setPlaylistName] = React.useState("");
+    const [showAlertSaveToSpotify, setShowAlertSaveToSpotify] = React.useState(false);
+    const [showAlertSaveToSpotifyErr, setShowAlertSaveToSpotifyErr] = React.useState(false);
+
 
     function handlePlaylistOnChange(e){
         setPlaylistName(e.target.value);
@@ -20,10 +23,45 @@ function Playlist(props) {
         props.playlist.map((item) => {
             uris.push(item.uri);
         })
-        saveToSpotify(playlistName,uris)
-        setPlaylistName("")
-        props.clearPlaylist();
+
+        if(playlistName === ""){
+            setShowAlertSaveToSpotifyErr(true);
+            return;
+        }
+
+            saveToSpotify(playlistName,uris).then(
+                result =>{
+                    setPlaylistName("");
+                    props.clearPlaylist();
+                    setShowAlertSaveToSpotify(true)
+                }
+            ).catch(err=>{
+                setShowAlertSaveToSpotifyErr(true);
+            })
+
+
     }
+
+    React.useEffect(() => {
+        if (showAlertSaveToSpotify) {
+            const timer = setTimeout(() => {
+                setShowAlertSaveToSpotify(false);
+            }, 3000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [showAlertSaveToSpotify]); //Auto close alert
+
+    React.useEffect(() => {
+        if (showAlertSaveToSpotifyErr) {
+            const timer = setTimeout(() => {
+                setShowAlertSaveToSpotifyErr(false);
+            }, 3000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [showAlertSaveToSpotifyErr]); //Auto close alert
+
 
 
     return (
@@ -97,7 +135,24 @@ function Playlist(props) {
                         Save to Spotify
                     </Button>
                 </Container>
+
+                {showAlertSaveToSpotify && (
+                    <Alert variant="filled" severity="success" sx={{position: 'absolute', bottom: '70px'}}>
+                        <AlertTitle>Successful</AlertTitle>
+                        Playlist successfully saved in Spotify.
+                    </Alert>
+                )}
+                {showAlertSaveToSpotifyErr && (
+                    <Alert variant="filled" severity="error" sx={{position: 'absolute', bottom: '70px'}}>
+                        <AlertTitle>Error</AlertTitle>
+                        Please enter the playlist name and add songs in it.
+                    </Alert>
+                )}
+
+
             </Box>
+
+
 
     )
 }

@@ -3,7 +3,7 @@ import Playlist from './Playlist';
 import SearchResult from './SearchResults';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import {Grid2} from "@mui/material";
+import {Alert, AlertTitle, Grid2} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import {searchSong} from "../services/spotifyFetchSong";
 import {loginSpotify, loginStatus} from "../services/spotifyLogin";
@@ -13,7 +13,9 @@ function TrackList(props) {
     const [playlist, setPlaylist] = React.useState([]);
     const [searchValue, setSearchValue] = React.useState("");
     const[data,setData] = React.useState([]);
+    const [showAlertSearchSong , setShowAlertSearchSong] = React.useState(false);
     const hasLoggedIn = React.useRef(false);
+
 
     React.useEffect(() => {
         if (!hasLoggedIn.current) {
@@ -29,8 +31,19 @@ function TrackList(props) {
     }
 
     function handleSearchButtonClick() {
-        searchSong(searchValue).then(result => {setData(result)});
+
+        searchSong(searchValue)
+            .then(result => {
+                if (result) {
+                setData(result)
+                }else{
+                }
+            })
+            .catch((error) => {
+                setShowAlertSearchSong(true);
+            })
         setSearchValue("");
+
     }
 
     function handleClearPlaylist(){
@@ -44,6 +57,16 @@ function TrackList(props) {
     function handleRemoveFromPlaylist(songName) {
         setPlaylist(prev => prev.filter((song) => song.id !== songName));
     }
+
+    React.useEffect(() => {
+        if (showAlertSearchSong) {
+            const timer = setTimeout(() => {
+                setShowAlertSearchSong(false);
+            }, 3000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [showAlertSearchSong]); //Auto close alert
 
 
     return(
@@ -87,8 +110,16 @@ function TrackList(props) {
 
             </Grid2>
 
+            {showAlertSearchSong && (
+                <Alert variant="filled" severity="error">
+                    <AlertTitle>Invalid Input</AlertTitle>
+                    Please enter a valid song
+                </Alert>
+            )}
+
         </Grid2>
     )
+
 }
 
 export default TrackList;
