@@ -13,7 +13,7 @@ export async function redirectToAuthCodeFlow(clientId) {
     const params = new URLSearchParams();
     params.append("client_id", clientId);
     params.append("response_type", "code");
-    params.append("redirect_uri", "https://jammmingbeta.netlify.app/callback");
+    params.append("redirect_uri", "https://jammmingbeta.netlify.app/home");
     params.append("scope", "user-read-private user-read-email playlist-modify-public");
     params.append("code_challenge_method", "S256");
     params.append("code_challenge", challenge);
