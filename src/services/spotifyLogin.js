@@ -1,4 +1,4 @@
-const clientId = "process.env.REACT_APP_API_KEY";
+const clientId = "db5e3e91e9fd4654ac108625797b4560";
 const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
 export let accessToken;
